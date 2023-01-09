@@ -1,10 +1,10 @@
-"use strict";
+import { host } from "@jsdevtools/host-environment";
+import chai from "chai";
+import $RefParser from "../../lib/index.js";
 
-const { host } = require("@jsdevtools/host-environment");
-const { expect } = require("chai");
-const $RefParser = require("../../lib");
+const { expect } = chai;
 
-const isWindows = /^win/.test(globalThis.process?.platform);
+const isWindows = /^win/.test(globalThis.process ? globalThis.process.platform : undefined);
 
 describe("HTTP options", () => {
   let windowOnError, testDone;

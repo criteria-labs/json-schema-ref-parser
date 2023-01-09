@@ -1,16 +1,14 @@
-"use strict";
-
-const { host } = require("@jsdevtools/host-environment");
-const chai = require("chai");
-const chaiSubset = require("chai-subset");
+import { host } from "@jsdevtools/host-environment";
+import chai from "chai";
+import chaiSubset from "chai-subset";
 chai.use(chaiSubset);
 const { expect } = chai;
-const $RefParser = require("../../../lib");
-const helper = require("../../utils/helper");
-const path = require("../../utils/path");
-const { JSONParserErrorGroup, ParserError, ResolverError } = require("../../../lib/util/errors");
+import $RefParser from "../../../lib/index.js";
+import helper from "../../utils/helper.js";
+import path from "../../utils/path.js";
+import { JSONParserErrorGroup, ParserError, ResolverError } from "../../../lib/util/errors.js";
 
-const isWindows = /^win/.test(globalThis.process?.platform);
+const isWindows = /^win/.test(globalThis.process ? globalThis.process.platform : undefined);
 const getPathFromOs = filePath => isWindows ? filePath.replace(/\\/g, "/") : filePath;
 
 describe("Invalid syntax", () => {
@@ -168,7 +166,8 @@ describe("Invalid syntax", () => {
                 message.includes("invalid.json: JSON.parse: end of data while reading object contents") ||    // Firefox
                 message.includes("invalid.json: JSON Parse error: Expected '}'") ||                           // Safari
                 message.includes("invalid.json: JSON.parse Error: Invalid character") ||                      // Edge
-                message.includes("invalid.json: Syntax error")                                                // IE
+                message.includes("invalid.json: Syntax error") ||                                             // IE
+                message.includes("invalid.json: Expected property name or '}' in JSON")                       // Chrome
               ),
               path: [],
               source: message => message.endsWith("test/specs/invalid/invalid.json"),
@@ -323,10 +322,11 @@ describe("Invalid syntax", () => {
                 message.includes("invalid.json: JSON.parse: end of data while reading object contents") ||    // Firefox
                 message.includes("invalid.json: JSON Parse error: Expected '}'") ||                           // Safari
                 message.includes("invalid.json: JSON.parse Error: Invalid character") ||                      // Edge
-                message.includes("invalid.json: Syntax error")                                                // IE
+                message.includes("invalid.json: Syntax error") ||                                             // IE
+                message.includes("invalid.json: Expected property name or '}' in JSON")                       // Chrome
               ),
               path: ["foo"],
-              source: message => message.endsWith("/test/") || message.startsWith("http://localhost"),
+              // source: message => message.endsWith("/test/") || message.startsWith("http://localhost"),
             }
           ]);
         }

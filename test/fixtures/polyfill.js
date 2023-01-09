@@ -1,6 +1,4 @@
-"use strict";
-
-const { host } = require("@jsdevtools/host-environment");
+import { host } from "@jsdevtools/host-environment";
 
 // Load the Babel Polyfills for old browsers.
 // NOTE: It's important that we ONLY do this when needed,
@@ -9,7 +7,7 @@ if (host.browser.IE) {
   require("@babel/polyfill");
 }
 
-import("node-fetch").then(({ default: fetch }) => {
+import("isomorphic-fetch").then(({ default: fetch }) => {
   if (!globalThis.fetch) {
     globalThis.fetch = fetch;
   }
