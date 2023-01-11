@@ -79,14 +79,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run tests (Ubuntu)
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: npm run coverage:browser
-        env:
-          EDGE_BIN: /usr/bin/microsoft-edge
-
-      - name: Run tests (macOS, Windows)
-        if: ${{ matrix.os != 'ubuntu-latest' }}
+      - name: Run tests
         run: npm run coverage:browser
 
       - name: Combine code coverage data into a single file
