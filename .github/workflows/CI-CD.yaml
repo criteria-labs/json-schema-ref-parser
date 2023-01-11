@@ -65,6 +65,7 @@ jobs:
       matrix:
         os:
           - ubuntu-latest     # Chrome, Firefox
+          - macos-latest      # Safari
           - windows-latest    # Internet Explorer
 
     steps:
